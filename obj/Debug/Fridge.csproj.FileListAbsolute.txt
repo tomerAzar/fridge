@@ -1,0 +1,7 @@
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\bin\Debug\Fridge.exe.config
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\bin\Debug\Fridge.exe
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\bin\Debug\Fridge.pdb
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\obj\Debug\Fridge.csprojAssemblyReference.cache
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\obj\Debug\Fridge.csproj.CoreCompileInputs.cache
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\obj\Debug\Fridge.exe
+D:\Visual Studio Projects\source\repos\Fridge\Fridge\obj\Debug\Fridge.pdb
