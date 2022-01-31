@@ -44,6 +44,12 @@ namespace Fridge
         {
             return $"id: {this._fridgeId}, type: {this._type}, color: {this._color}, number of maximum shelfs: {this._numberOfShelfs}, actual shelfs: {this._shelfs.Count}";
         }
+        public void PrintItems ()
+        {
+            foreach (Shelf shelf in this._shelfs)
+                foreach (Item item in shelf.Items)
+                    Console.WriteLine(item.ToString());
+        }
         public int FreeSpace ()
         {
             int freeSpace = 0;
@@ -82,7 +88,10 @@ namespace Fridge
                 foreach(Item item in shelf.Items)
                 {
                     if (item.ItemId == id)
+                    {
                         shelf.RemoveItem(id);
+                        return;
+                    }
                 }
             }
         }
@@ -157,6 +166,48 @@ namespace Fridge
                 shelfsCopy.Remove(this.MostSpacedShalfe(shelfsCopy));
             }
             return shelfsSorted;
+        }
+        public void MakeFridgeToShopping ()
+        {
+            if (this.FreeSpace() >= 29) return;
+            this.ClearExpiredItems();
+            if (this.FreeSpace() >= 29) return;
+            int optionalFreeSpace = 0;
+            List<Item> deleteItems = new List<Item>();
+            foreach (Shelf shelf in _shelfs)
+            {
+                foreach (Item item in shelf.Items)
+                {
+                    int days = item.ExpiryDate.Year * 365 + item.ExpiryDate.Month * 30 + item.ExpiryDate.Day;
+                    int Todaydays = DateTime.Today.Year * 365 + DateTime.Today.Month * 30 + DateTime.Today.Day;
+
+                    if (item.Kashrot == Kashrut.dairy && days - Todaydays <3)
+                    {
+                        optionalFreeSpace += item.Space;
+                        deleteItems.Add(item);
+                    }
+                    if (item.Kashrot == Kashrut.meat && days - Todaydays < 7)
+                    {
+                        optionalFreeSpace += item.Space;
+                        deleteItems.Add(item);
+                    }
+                    if (item.Kashrot == Kashrut.pareve && days - Todaydays < 1)
+                    {
+                        optionalFreeSpace += item.Space;
+                        deleteItems.Add(item);
+                    }
+                }
+            }
+            if (this.FreeSpace() + optionalFreeSpace >= 29)
+            {
+                for (int i = 0; i < deleteItems.Count; i++)
+                {
+                    Console.WriteLine("deleting: " + deleteItems[i].ToString());
+                    RemoveItem(deleteItems[i].ItemId);
+                }
+            }
+            else
+                Console.WriteLine("canoot make fridge to shopping");
         }
     }
 }

@@ -50,6 +50,7 @@ namespace Fridge
             for (int i=0; i<numberOfItems; i++)
                 if (this.Items[i].ItemId == id)
                 {
+                    this.FreeSpace += this.Items[i].Space;
                     this.Items.Remove(this.Items[i]);
                     return;
                 }
